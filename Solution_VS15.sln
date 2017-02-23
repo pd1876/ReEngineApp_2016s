@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_Basics", "01_Basics\01_Basics.vcxproj", "{425ED9DA-852E-4F61-BE06-487F68A6187E}"
 EndProject
@@ -46,6 +46,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A05_Transformations", "A05_Transformations\A05_Transformations.vcxproj", "{AABA05C7-71CD-4C9B-A52F-78117CDBC72D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A04s_3DShapes_DEMO", "A04s_3DShapes\A04s_3DShapes.vcxproj", "{1249A06E-032E-4611-8749-E48CB5FCFF68}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "W5TR_Rotations_DEMO", "W5TR_Rotations_DEMO\W5TR_Rotations_DEMO.vcxproj", "{E64A6593-A3E6-45E5-9A38-5697B6CA0301}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +115,10 @@ Global
 		{1249A06E-032E-4611-8749-E48CB5FCFF68}.Debug|x86.Build.0 = Debug|Win32
 		{1249A06E-032E-4611-8749-E48CB5FCFF68}.Release|x86.ActiveCfg = Release|Win32
 		{1249A06E-032E-4611-8749-E48CB5FCFF68}.Release|x86.Build.0 = Release|Win32
+		{E64A6593-A3E6-45E5-9A38-5697B6CA0301}.Debug|x86.ActiveCfg = Debug|Win32
+		{E64A6593-A3E6-45E5-9A38-5697B6CA0301}.Debug|x86.Build.0 = Debug|Win32
+		{E64A6593-A3E6-45E5-9A38-5697B6CA0301}.Release|x86.ActiveCfg = Release|Win32
+		{E64A6593-A3E6-45E5-9A38-5697B6CA0301}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
