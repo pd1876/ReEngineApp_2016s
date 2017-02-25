@@ -49,6 +49,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A04s_3DShapes_DEMO", "A04s_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "W5TR_Rotations_DEMO", "W5TR_Rotations_DEMO\W5TR_Rotations_DEMO.vcxproj", "{E64A6593-A3E6-45E5-9A38-5697B6CA0301}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "W5R_Rotations_DEMO", "\\banner.main.ad.rit.edu\students\pd1876\IGMProfile\Documents\ReEngineApp_2016s\W5R_Rotations_DEMO\W5R_Rotations_DEMO.vcxproj", "{DBB63B9E-3E43-4E40-8601-29BE9FAC2ABD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -119,6 +121,10 @@ Global
 		{E64A6593-A3E6-45E5-9A38-5697B6CA0301}.Debug|x86.Build.0 = Debug|Win32
 		{E64A6593-A3E6-45E5-9A38-5697B6CA0301}.Release|x86.ActiveCfg = Release|Win32
 		{E64A6593-A3E6-45E5-9A38-5697B6CA0301}.Release|x86.Build.0 = Release|Win32
+		{DBB63B9E-3E43-4E40-8601-29BE9FAC2ABD}.Debug|x86.ActiveCfg = Debug|Win32
+		{DBB63B9E-3E43-4E40-8601-29BE9FAC2ABD}.Debug|x86.Build.0 = Debug|Win32
+		{DBB63B9E-3E43-4E40-8601-29BE9FAC2ABD}.Release|x86.ActiveCfg = Release|Win32
+		{DBB63B9E-3E43-4E40-8601-29BE9FAC2ABD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

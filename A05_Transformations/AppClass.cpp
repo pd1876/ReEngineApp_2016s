@@ -17,7 +17,7 @@ void AppClass::InitVariables(void)
 
 	m_pSun->GenerateSphere(5.936f, 5, REYELLOW);
 	m_pEarth->GenerateTube(0.524f, 0.45f, 0.3f, 10, REBLUE);
-	m_pMoon->GenerateTube(0.524f * 0.27f, 0.45f * 0.27f, 0.3f * 0.27f, 10, REWHITE);
+	m_pMoon->GenerateTube(0.524f * 0.27f, 0.45f * 0.27f, 0.3f * 0.27f, 10, RERED);
 }
 
 void AppClass::Update(void)
@@ -50,10 +50,13 @@ void AppClass::Update(void)
 
 #pragma region YOUR CODE GOES HERE
 	//Calculate the position of the Earth
-	m_m4Earth = glm::rotate(IDENTITY_M4, m_fEarthTimer, vector3(0.0f, 1.0f, 0.0f));
-
+	m_m4Earth = glm::rotate(rotateX, m_fEarthTimer, vector3(0.0f, 1.0f, 0.0f));
+	m_m4Earth = glm::translate(m_m4Sun, vector3(sin(m_fEarthTimer) * 11.0f, 0.0f, cos(m_fEarthTimer) * 11.0f));
+	// 
+	//  
 	//Calculate the position of the Moon
-	m_m4Moon = glm::rotate(IDENTITY_M4, m_fMoonTimer, vector3(0.0f, 1.0f, 0.0f));
+	m_m4Moon = glm::rotate(m_m4Moon, m_fMoonTimer, vector3(0.0f, 1.0f, 0.0f));
+	m_m4Moon = glm::translate(m_m4Earth, vector3(sin(m_fMoonTimer) * 2.0f, 0.0f, cos(m_fMoonTimer) * 2.0f));
 #pragma endregion
 
 #pragma region Print info
