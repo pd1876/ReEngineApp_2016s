@@ -14,6 +14,18 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Sorted\\WallEye.bto", "WallEye");
 
 	fDuration = 1.0f;
+
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
 }
 
 void AppClass::Update(void)
@@ -36,7 +48,26 @@ void AppClass::Update(void)
 #pragma endregion
 
 #pragma region Your Code goes here
-	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "WallEye");
+	// Use the clock...
+	static DWORD startTimeSystem = GetTickCount(); // get systems start up time
+	DWORD timeApplication = GetTickCount() - startTimeSystem; // get current time and substract start time
+	float timer = timeApplication / 1000.0f; // convert time from ms to s
+
+	// move model
+	matrix4 m4WallEye;
+	float timerMapped = MapValue(timer, 0.0f, 5.0f, 0.0f, 1.0f);
+	if (timerMapped > 1.0f) {
+		timerMapped = 1.0f;
+	}
+	vector3 v3Lerp = glm::lerp(vector3(-5.0f, 0.0f, 0.0f), vector3(5.0f, 0.0f, 0.0f), timerMapped);
+	m4WallEye = glm::translate(v3Lerp);
+	m_pMeshMngr->SetModelMatrix(m4WallEye, "WallEye");
+
+	// matrix for spheres for locations
+	matrix4 m4Sphere1;
+	m4Sphere1 = glm::translate(vector3(1.5f, 0.0f, 0.0f)) * glm::scale(vector3(0.1f));
+	// adding sphere to render list
+	m_pMeshMngr->AddSphereToRenderList(m4Sphere1, RERED, SOLID);
 #pragma endregion
 
 #pragma region Does not need changes but feel free to change anything here
@@ -49,6 +80,10 @@ void AppClass::Update(void)
 	//Print info on the screen
 	m_pMeshMngr->PrintLine("");
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
+
+	m_pMeshMngr->PrintLine("Time is: " + std::to_string(timer)); // print time
+
+	// Print the FPS
 	m_pMeshMngr->Print("FPS:");
 	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
 #pragma endregion
