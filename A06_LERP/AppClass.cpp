@@ -16,16 +16,16 @@ void AppClass::InitVariables(void)
 	fDuration = 1.0f;
 
 	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
-	locs.push_back(vector3(-4.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(1.0f, -2.0f, 5.0f));
+	locs.push_back(vector3(-3.0f, -1.0f, 3.0f));
+	locs.push_back(vector3(2.0f, -1.0f, 3.0f));
+	locs.push_back(vector3(-2.0f, 0.0f, 0.0f));
+	locs.push_back(vector3(3.0f, 0.0f, 0.0f));
+	locs.push_back(vector3(-1.0f, 1.0f, -3.0f));
+	locs.push_back(vector3(4.0f, 1.0f, -3.0f));
+	locs.push_back(vector3(0.0f, 2.0f, -5.0f));
+	locs.push_back(vector3(5.0f, 2.0f, -5.0f));
+	locs.push_back(vector3(1.0f, 3.0f, -5.0f));
 }
 
 void AppClass::Update(void)
@@ -53,21 +53,44 @@ void AppClass::Update(void)
 	DWORD timeApplication = GetTickCount() - startTimeSystem; // get current time and substract start time
 	float timer = timeApplication / 1000.0f; // convert time from ms to s
 
-	// move model
-	matrix4 m4WallEye;
+	// find the duration the movement is supposed to take
 	float timerMapped = MapValue(timer, 0.0f, 5.0f, 0.0f, 1.0f);
+	m_pMeshMngr->PrintLine(std::to_string(timerMapped));
+	m_pMeshMngr->PrintLine(std::to_string(fRunTime));
+
 	if (timerMapped > 1.0f) {
 		timerMapped = 1.0f;
 	}
-	vector3 v3Lerp = glm::lerp(vector3(-5.0f, 0.0f, 0.0f), vector3(5.0f, 0.0f, 0.0f), timerMapped);
+
+
+	// draw location points
+	for (int i = 0; i < locs.size(); i++) {
+		// matrix for spheres for locations
+		matrix4 m4Sphere1;
+		m4Sphere1 = glm::translate(locs[i]) * glm::scale(vector3(0.1f));
+		// adding sphere to render list
+		m_pMeshMngr->AddSphereToRenderList(m4Sphere1, RERED, SOLID);
+	}
+
+	// calculate next location
+	static int prevLoc = 0;
+	static int nextLoc = 1;
+	if (fRunTime > fDuration) {
+		prevLoc++;
+		nextLoc++;
+		timerMapped = 0.0f;
+
+		if (nextLoc >= locs.size())
+			nextLoc = 0;
+		if (prevLoc >= locs.size())
+			prevLoc = 0;
+	}
+
+	// Lerp model
+	matrix4 m4WallEye;
+	vector3 v3Lerp = glm::lerp(locs[prevLoc], locs[nextLoc], timerMapped);
 	m4WallEye = glm::translate(v3Lerp);
 	m_pMeshMngr->SetModelMatrix(m4WallEye, "WallEye");
-
-	// matrix for spheres for locations
-	matrix4 m4Sphere1;
-	m4Sphere1 = glm::translate(vector3(1.5f, 0.0f, 0.0f)) * glm::scale(vector3(0.1f));
-	// adding sphere to render list
-	m_pMeshMngr->AddSphereToRenderList(m4Sphere1, RERED, SOLID);
 #pragma endregion
 
 #pragma region Does not need changes but feel free to change anything here
