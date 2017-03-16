@@ -43,7 +43,7 @@ void AppClass::Update(void)
 	double fTimeSpan = m_pSystem->LapClock(); //Delta time (between frame calls)
 
 	//cumulative time
-	static double fRunTime = 0.0f; //How much time has passed since the program started
+	static float fRunTime = 0.0f; //How much time has passed since the program started
 	fRunTime += fTimeSpan; 
 #pragma endregion
 
@@ -54,14 +54,8 @@ void AppClass::Update(void)
 	float timer = timeApplication / 1000.0f; // convert time from ms to s
 
 	// find the duration the movement is supposed to take
-	float timerMapped = MapValue(timer, 0.0f, 5.0f, 0.0f, 1.0f);
-	m_pMeshMngr->PrintLine(std::to_string(timerMapped));
-	m_pMeshMngr->PrintLine(std::to_string(fRunTime));
-
-	if (timerMapped > 1.0f) {
-		timerMapped = 1.0f;
-	}
-
+	float timerMapped = MapValue(fRunTime, 0.0f, fDuration, 0.0f, 1.0f);
+	
 
 	// draw location points
 	for (int i = 0; i < locs.size(); i++) {
@@ -75,10 +69,9 @@ void AppClass::Update(void)
 	// calculate next location
 	static int prevLoc = 0;
 	static int nextLoc = 1;
-	if (fRunTime > fDuration) {
+	if (fRunTime >= fDuration) {
 		prevLoc++;
 		nextLoc++;
-		timerMapped = 0.0f;
 
 		if (nextLoc >= locs.size())
 			nextLoc = 0;
@@ -91,6 +84,11 @@ void AppClass::Update(void)
 	vector3 v3Lerp = glm::lerp(locs[prevLoc], locs[nextLoc], timerMapped);
 	m4WallEye = glm::translate(v3Lerp);
 	m_pMeshMngr->SetModelMatrix(m4WallEye, "WallEye");
+
+	if (timerMapped > 1.0f) {
+		fRunTime = 0.0f;
+	}
+
 #pragma endregion
 
 #pragma region Does not need changes but feel free to change anything here
@@ -104,7 +102,9 @@ void AppClass::Update(void)
 	m_pMeshMngr->PrintLine("");
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
 
-	m_pMeshMngr->PrintLine("Time is: " + std::to_string(timer)); // print time
+	m_pMeshMngr->PrintLine("Time Span: " + std::to_string(fTimeSpan));
+	m_pMeshMngr->PrintLine("Run Time: " + std::to_string(fRunTime));
+	m_pMeshMngr->PrintLine("Duration: " + std::to_string(fDuration));
 
 	// Print the FPS
 	m_pMeshMngr->Print("FPS:");
