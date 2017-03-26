@@ -1,7 +1,7 @@
 #include "AppClass.h"
 void AppClass::InitWindow(String a_sWindowName)
 {
-	super::InitWindow("SLERP - YOUR USER NAME GOES HERE"); // Window Name
+	super::InitWindow("SLERP - Pedro DelaCuadra"); // Window Name
 
 	//Setting the color to black
 	m_v4ClearColor = vector4(0.0f);
@@ -22,6 +22,10 @@ void AppClass::InitVariables(void)
 
 	//Setting the days duration
 	m_fDay = 1.0f;
+
+	m4Sun = glm::scale(0.0f, 0.0f, 0.0f); 
+	m4Earth = glm::scale(0.524f, 0.524f, 0.524f) + glm::translate(11.0f, 0.0f, 0.0f);
+	m4Moon = m4Earth * (glm::scale(0.27f, 0.27f, 0.27f) + glm::translate(2.0f, 0.0f, 0.0f));
 }
 
 void AppClass::Update(void)
@@ -39,7 +43,7 @@ void AppClass::Update(void)
 	//Getting the time between calls
 	double fCallTime = m_pSystem->LapClock();
 	//Counting the cumulative time
-	static double fRunTime = 0.0f;
+	static float fRunTime = 0.0f;
 	fRunTime += fCallTime;
 
 	//Earth Orbit
@@ -47,10 +51,24 @@ void AppClass::Update(void)
 	float fEarthHalfRevTime = 0.5f * m_fDay; // Move for Half a day
 	float fMoonHalfOrbTime = 14.0f * m_fDay; //Moon's orbit is 28 earth days, so half the time for half a route
 
+	float fPercentage = MapValue(fRunTime, 0.0f, fEarthHalfRevTime, 0.0f, 1.0f);
+
+	// earth orbit quats
+	quaternion earthOrb1;
+	quaternion earthOrb2;
+	quaternion finalEarthOrb;
+
+	// earth revolution quats
+	quaternion earthRev1 = glm::angleAxis(0.0f, vector3(0.0f, 0.0f, 1.0f));
+	quaternion earthRev2 = glm::angleAxis(359.0f, vector3(0.0f, 0.0f, 1.0f));
+	quaternion finalEarthRev = glm::mix(earthRev1, earthRev2, fPercentage);
+
+	m4Earth = m4Earth * ToMatrix4(finalEarthRev);
+
 	//Setting the matrices
-	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Sun");
-	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Earth");
-	m_pMeshMngr->SetModelMatrix(IDENTITY_M4, "Moon");
+	m_pMeshMngr->SetModelMatrix(m4Sun, "Sun");
+	m_pMeshMngr->SetModelMatrix(m4Earth, "Earth");
+	m_pMeshMngr->SetModelMatrix(m4Moon, "Moon");
 
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
@@ -81,7 +99,9 @@ void AppClass::Update(void)
 	m_pMeshMngr->PrintLine(std::to_string(nMoonOrbits));
 
 	m_pMeshMngr->Print("FPS:");
-	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+	m_pMeshMngr->PrintLine(std::to_string(nFPS), RERED);
+
+	m_pMeshMngr->Print(std::to_string(fPercentage), REBLUE);
 }
 
 void AppClass::Display(void)
