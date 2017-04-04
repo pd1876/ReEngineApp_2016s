@@ -15,6 +15,30 @@ void AppClass::Update(void)
 
 #pragma region YOUR CODE GOES HERE
 	modelMatrix = IDENTITY_M4;
+
+	// start and end point
+	static vector3 v3Start = vector3(0.0f, 0.0f, 0.0f);
+	static vector3 v3End = vector3(0.0f, 3.0f, 0.0f);
+
+	// lerp up and down
+	float fPercentage = MapValue(fTimer, 0.0f, 2.0f, 0.0f, 1.0f);
+	vector3 v3Lerp = glm::lerp(v3Start, v3End, fPercentage);
+	// end lerp
+
+	// rotate object
+	quaternion q1 = glm::angleAxis(0.0f, vector3(0.0f, 0.0f, 1.0f));
+	quaternion q2 = glm::angleAxis(180.0f, vector3(0.0f, 0.0f, 1.0f));
+	quaternion q3 = glm::mix(q1, q2, fPercentage*2.0f);
+	// end rotation
+
+	// set model matrix
+	modelMatrix = glm::translate(v3Lerp) * ToMatrix4(q3);
+
+	// reset timer
+	if (fPercentage > 1.0) {
+		std::swap(v3Start, v3End);
+		fTimer = 0.0f;
+	}
 #pragma endregion
 
 #pragma region DOES NOT NEED CHANGES
