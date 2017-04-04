@@ -30,6 +30,8 @@ void AppClass::InitVariables(void)
 
 void AppClass::Update(void)
 {
+	m_pMeshMngr->ClearRenderList();
+
 	//Update the system's time
 	m_pSystem->UpdateTime();
 

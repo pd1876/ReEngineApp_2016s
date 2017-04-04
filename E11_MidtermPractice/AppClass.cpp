@@ -18,12 +18,12 @@ void AppClass::Update(void)
 	m_m4Steve = glm::mat4(1.0f); // same as m_m4Steve = IDENTITY_M4; setting the identity to steve
 
 	// rotate steve around origin
-	quaternion q1 = glm::angleAxis(0.0f, vector3(0.0f, 0.0f, 1.0f));
-	quaternion q2 = glm::angleAxis(359.0f, vector3(0.0f, 0.0f, 1.0f));
-	quaternion q3;
-	float animationTime = 5.0f;
-	float fPercentage = MapValue(dTotalTime, 0.0f, animationTime, 0.0f, 1.0f);
-	q3 = glm::mix(q1, q2, fPercentage);
+	//quaternion q1 = glm::angleAxis(0.0f, vector3(0.0f, 0.0f, 1.0f));
+	//quaternion q2 = glm::angleAxis(359.0f, vector3(0.0f, 0.0f, 1.0f));
+	//quaternion q3;
+	//float animationTime = 5.0f;
+	//float fPercentage = MapValue(dTotalTime, 0.0f, animationTime, 0.0f, 1.0f);
+	//q3 = glm::mix(q1, q2, fPercentage);
 	// end rotation around origin
 
 	// position lerp variables
@@ -41,7 +41,7 @@ void AppClass::Update(void)
 	// end lerp position
 
 	// convert quaternion to matrix
-	m_m4Steve = ToMatrix4(q3);
+	//m_m4Steve = ToMatrix4(q3);
 
 	// translate matrix
 	m_m4Steve *= glm::translate(v3Lerp);

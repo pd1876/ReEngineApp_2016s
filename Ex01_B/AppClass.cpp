@@ -15,6 +15,7 @@ void AppClass::Update(void)
 
 #pragma region YOUR CODE GOES HERE
 	modelMatrix = IDENTITY_M4;
+	modelMatrix = glm::translate(modelMatrix, vector3((cos(fTimer)*3.0f), (sin(fTimer)*3.0f), 0.0f));
 #pragma endregion
 
 #pragma region DOES NOT NEED CHANGES
