@@ -99,7 +99,7 @@ void AppClass::Update(void)
 	int nFPS = m_pSystem->GetFPS();
 
 	//Print info on the screen
-	m_pMeshMngr->PrintLine("");
+	m_pMeshMngr->PrintLine("");//Add a line on top
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
 
 	m_pMeshMngr->PrintLine("Time Span: " + std::to_string(fTimeSpan));
